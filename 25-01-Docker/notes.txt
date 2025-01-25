@@ -1,0 +1,42 @@
+For creating node JS project
+mkdir project2
+cd project2
+create Package.json file: npm init -y
+npm i express
+
+edit package.json file to give start command: "start":"node index.js",
+
+create Docker file: Dockerfile
+buid an image: docker build -t nodeproject .
+
+run image in container: docker run -d --name server -p 5000:5000 nodeproject
+check container status: docker ps
+
+open: localhost:5000
+
+-------------------------------------------------------------------
+The data which is stored with the container its under temporary storage
+which will get deleted when you delete your container.
+
+To persist your data you can use docker volume.
+
+-- docker volume create storage1 
+
+-- docker volume ls 
+
+-- docker volume inspect storage1
+
+Attach volume with container
+
+docker run -d --name server -v srorage1:/app/data -p 80:80 portfolio
+
+*** Network
+
+We can setup a network to run the multiple container under the same
+connect multiple container then the must be under 1 network.
+
+-- docker network create project1 
+
+-- docker network ls 
+
+-- docker network inspect project1
