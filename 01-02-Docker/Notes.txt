@@ -1,0 +1,59 @@
+If you wnat to communicate containers then they must be run under one network.
+
+First of all let's create one network
+> docker network create sonam
+
+Verify the cretaed network
+> docker network ls
+
+Verify Detailed network
+>docker network inspect sonam
+
+Let's run 2 containers under one network and communicate
+>docker run --name container1 --network sonam -d nginx
+>docker run --name container2 --network sonam -d nginx
+
+You can verify the same by inspecting the network where you can see container running
+>docker network inspect sonam
+
+execute below command to get into container1
+> docker exec -it container1 bash
+
+install Ping
+> apt update
+> apt install iputils-ping
+
+Let's Ping
+> ping container2
+
+********* Docker Compose **********
+Docker Compose is a tool which is used to define and manage multi-container Docker appications.
+> docker-compose version
+
+Workflow:
+ Step 1: Define all the services in one yml 
+ step 2: Build and start the services using just one command
+
+Let's Create One Project which includes frontend + Backend + DB
+
+1. Create one folder named Backend
+    move to the folder 
+    cd backend > npm init -y > npm i express mysql2 dotenv
+    create one folder named src
+    in that create file named index.js
+    create Dockerfile in the root folder
+    Create .env file for adding environment variables
+2. in your terminal execute command:
+    npm create vite@latest
+    appname: frontend
+    select React
+    select Javascript
+    once its created> cd frontend > npm install
+    create Dockerfile in the root folder
+3.  Create docker-compose.yml
+
+Once its created then execute below command
+
+docker-compose --build -d up (it will up all your services)
+
+docker-compose down (it will down all your services)
