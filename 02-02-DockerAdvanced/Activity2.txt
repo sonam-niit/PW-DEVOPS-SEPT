@@ -1,0 +1,11 @@
+Bind mounts for File Sharing
+Share file between the host and the container
+
+Created a folder host_diretory in C: drive
+create index.html file and add some content
+
+Now we want to mount this to our container
+
+docker run -d -it --name devtest -v C:/host_directory:/usr/share/nginx/html -p 8080:80 nginx
+
+Once its deployed check localhost:8080 you can see the content Mounted.
