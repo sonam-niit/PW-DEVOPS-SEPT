@@ -1,0 +1,17 @@
+We have created a deployment means actually its creating some set of replicas.
+
+We exposed only one service for deployment
+how it is going to use all replicas?
+
+Service acs as load balancer which is actually distributing traffic among all the pod replicas.
+
+-- Service select all the pods which matched with the label (app:nginx)
+
+-- kubernetes uses endpoints to map the service with POD ips
+
+-- when user sends a request, it hits the  service, automaticallt load-balancer balances the 
+traffic across the all available pods
+
+kubectl get endpoints deployment-service
+
+kubectl get pods -o wide (see pods with Ips)

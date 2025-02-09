@@ -1,0 +1,61 @@
+Start Docker Desktop
+Check kubernetes is enabled or not.
+
+Install Minikube
+check Minikube version
+>minikube version
+
+Start Local Cluster
+>minikube start (once the cluster started check node status)
+>kubectl get nodes (here you can see one master node which is minikube)
+
+To get CLuster Info:
+>kubectl cluster-info
+For more details
+>kubectl cluster-info dump
+
+Pod and Containers
+--------------------------------------------------
+Container is a lightwight, standalone executable package which includes our application and
+packages.
+
+Pod is smalled unit in kubernetes which can container one or more tightly coupled Containers.
+-- Acts as a wrapper around multiple containers which can share same network and storage volumes.
+-- Each Pod has a single IP address and all container inside that pod can share it.
+Containers can communicate with each other using localhost.
+-- If you want to group multiple containers which can work closely together you can use POD
+-- kubernetes schedules and manages pods including resource allocation and replication.
+
+Create my-pod.yml file as shown here
+>kubectl apply -f my-pod.yml
+>kubectl get pods
+(you can execute twice to see the updated status)
+>kubectl describe pod nginx (check the events)
+
+Now to expose the pod as service cretae my-service.yml as mentioned
+
+>kubectl apply -f my-service.yml
+>kubect get svc
+>kubectl describe service my-service
+
+To access that in browser you need to execute 
+>minikube service my-service 
+automatically redirect you in browser.
+
+(if you want to delete pod or service use below command)
+>kubectl delete pod pod-name
+>kubectl delete service service-name
+
+Deployments:
+If you want to manage set of pods and replicas then we can take the help of Deployments
+
+Let's Create One Deployments
+go to the official documentation: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+
+Cretae one deployment1.yml file add the sample deployment code.
+
+>kubectl apply -f deployment1.yml
+>kubectl get deployment (you can see 3 services available)
+>kubectl get pods (you can 3 pods)
+>kubectl get rs (set of replicas)
+>kubectl get pods --show-labels (Pod with labels)
