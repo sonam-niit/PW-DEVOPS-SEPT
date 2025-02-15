@@ -1,0 +1,59 @@
+A Pod is a smallest unit in kubernetes which is deployable. Inside a pod 
+we can run one or more containers.
+Pods run containers, they can not auto restrart if they fails.
+
+-- Replica Set 
+it is specifying number of pod replicas which are running all the times
+if any pod fails then it will recreate in replicaset
+
+-- Deployment: provides all controller updates and all the rollback features.
+If any pod fails or any container fails it can restart automatically.
+
+** Creating Pod ** 
+Create pod.yml file save it
+to create pod run below command
+>kubectl apply -f pod.yml
+>kubectl get pods
+>kubectl describe pod nginx
+
+** Creating Replics Sets ************
+Create replicaset.yml file. add the mentioned code
+>kubectl apply -f replicaset.yml
+>kubectl get replicaset
+>kubectl get pods
+        ----Scaling------
+>kubectl scale replicaset my-replicaset --replicas=5
+>kubectl get replicaset
+>kubectl get pods
+        --- Scale Down -----
+>kubectl scale replicaset my-replicaset --replicas=2
+you can edit the no of replicas in file as well and apply
+or directly use --replicas and give no of replica to scale up or down
+
+Replicaset also maintain no of pods based on the no of replicas
+means if you manually delete the pod replicaset will recreate the another pod
+to maintain the no of replicas.
+
+>kubectl delete pod pod-name
+>kubect get pods (you can see the newly created pod)
+>kubectl delete replicaset my-replicaset
+
+       ******** Deployment **********
+
+Let's create file deployment.yml
+>kubectl apply -f deployment.yml
+>kubectl get deployment
+>kubectl get nodes
+>kubectl describe deployment nginx-deployment (see the image version)
+    edit file with nginx version: 1.21 save it 
+>kubectl apply -f deployment.yml
+verify using describe command
+>kubectl describe deployment nginx-deployment (see the image version)
+Checking Rolling Status
+>kubectl rollout status deployment nginx-deployment
+>kubectl describe deployment nginx-deployment
+
+Go back to the previous stable version
+>kubectl rollout undo deployment nginx-deployment
+>kubectl rollout status deployment nginx-deployment
+>kubectl describe deployment nginx-deployment(see the status and version)
