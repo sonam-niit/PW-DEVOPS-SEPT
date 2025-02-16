@@ -1,0 +1,30 @@
+StatefulSet  which is a K8s Workload API object which is actually used to manage
+statefull application.
+
+Maintaine Stable Network: Pod is having unique name
+Ordered Deployment and Scaling: pods starts in sequence based on defination
+Persistent Storage: Each Pod retain its data even after rescheduled
+Stable pod names: like myapp-0,myapp-1, myapp-2
+
+When To Use StatefulSet?
+
+--- Distributed Systems: Kafka, Zookeeper
+--- Databases: MySQL, PostGreSQL, mongoDb
+
+**** Example ****
+Deploy MySQL Database using StatefulSet
+
+1. Create Mysql.yml for creating Headless service
+2. Create PVC (each Pod in StatefulSet will get their own PVC)-- mysql-pvc.yml
+3. Create statefulset inside that we will create pods (no of replicas and volumes)
+
+kubectl apply -f mysql.yml
+kubectl apply -f mysql-pvc.yml
+kubectl apply -f mysql-statefulset.yml
+kubectl get statefulset
+kubectl get pods (see the sequence and names of pods)
+kubectl get pvc (check the name of volume)
+
+The Above same procedure if you wnat to do using nginx 
+then see the below mentioned doc:
+https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/

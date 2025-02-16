@@ -1,0 +1,37 @@
+Download helm binary files from this location: https://github.com/helm/helm/releases
+
+extract and you can rename the folder to helm
+copy that and paste in your c drive
+
+copy path like C:/helm and configure using environment variable
+
+right click PC--> properties --> Advanced System Settings --> environment variables
+--> path --> new --> add that copied path --> OK
+
+Open terminal and check helm version
+> help version
+
+(make sure minikube must be started)
+Let's Create One Simple Chart
+>helm create mychart
+
+open values.yml file and make changes for tag: latest
+in service: NodePort
+
+>helm install myrelease mychart
+(if chart created successfully)
+>kubectl get deployment
+>kubectl get pods
+>kubectl get svc
+
+let's upgrae values.yml and change replicasets to 3
+>helm upgrade myrelease mychart
+(you can see the revision no 2)
+>kubectl get pods (3 pods running)
+>helm rollback myrelease 1 (rollback to revision 1)
+>kubectl get pods (see 2 pods running)
+
+uninstall helm
+>helm uninstall myrelease
+you can see all services
+>kubectl get all
