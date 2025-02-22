@@ -1,0 +1,39 @@
+RBAC: Role-Based Access Control
+
+-- helps to manage permissions from diffrent users and services
+
+Create one Service Account
+service-accoount.yml
+> kubectl apply -f service-accoount.yml
+(response will be dev-user created)
+>kubectl get serviceaccount
+
+** Define RBAC Role:: RBAC  role requires Role and RoleBindings
+create role.yml
+> kubectl apply -f role.yml
+> kubectl get roles
+
+** Verify RBAC
+> kubectl auth can-i get pods --as=system:serviceaccount:default:dev-user
+> kubectl auth can-i get secrets --as=system:serviceaccount:default:dev-user
+(result will be no)
+because we have not bind the role with user
+
+**  RoleBindings
+create role-binding.yml
+> kubectl apply -f role-binding.yml
+> kubectl get rolebindings
+> kubectl auth can-i get pods --as=system:serviceaccount:default:dev-user
+> kubectl auth can-i get secrets --as=system:serviceaccount:default:dev-user
+(Response will be yes)
+> kubectl auth can-i get deployments --as=system:serviceaccount:default:dev-user
+(no as this permission is not aligned to this user)
+
+*** Clean Up
+
+>kubectl delete secret my-secret
+>kubectl delete secret test-secret
+>kubectl delete serviceaccount dev-user
+>kubectl delete role dev-user
+>kubectl delete rolebinding dev-role-binding
+
