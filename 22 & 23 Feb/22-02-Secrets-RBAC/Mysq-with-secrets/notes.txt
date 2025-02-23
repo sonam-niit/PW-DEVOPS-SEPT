@@ -7,3 +7,17 @@ Create mysql-secret.yml file for user credentials
 Verify the values
 >kubectl get secret mysql-secret -o jsonpath="{.data.username}"
 >kubectl get secret mysql-secret -o jsonpath="{.data.password}"
+
+Create mysql-pod.yml
+>kubectl apply -f mysql-pod.yml
+>kubectl get pods
+>kubectl describe pod mysql-pod
+
+Check the credentials in mysql
+> kubectl exec -it mysql-pod -- bin/bash
+
+    inside bash
+    # mysql -u root -p (enter root password verify and exit)
+    # mysql -u mysql-user -p (enter other user password and check and exit)
+
+to exit bash again type exit

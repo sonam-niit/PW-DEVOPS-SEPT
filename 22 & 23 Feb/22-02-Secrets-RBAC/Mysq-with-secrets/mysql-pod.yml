@@ -7,6 +7,13 @@ spec:
     - name: mysql-container
       image: mysql
       env:
+        - name: MYSQL_ROOT_PASSWROD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: root_password  
+        # - name: MYSQL_ALLOW_EMPTY_PASSWORD
+        #   value: "true"
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
