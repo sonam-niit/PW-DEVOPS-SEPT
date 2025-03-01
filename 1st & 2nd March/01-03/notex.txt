@@ -1,0 +1,129 @@
+Configure Network policy for Security
+
+--- By default minikube is not suporting Network policies.
+we can enable CNI (container Network Interface)
+
+minikube start --cni calico
+
+** Verify calico ************
+> kubectl get pods -n kube-system (get all pods running under kube-system namespace)
+
+Run in GitBash: > kubectl get pods -n kube-system | grep calico
+(it will fillter pods running with calico)
+
+To implement network policies
+--------------------------------------------
+
+Create namespace: kubectl create namespace secure-app
+Verify: kubectl get namespace
+
+**** Beckend Pod Cretaion *********
+ create backend.yml
+        apiVersion: v1
+            kind: Pod
+            metadata:
+            name: backend
+            namespace: secure-app
+            labels:
+                app: backend
+            spec:
+            containers:
+            - name: backend
+                image: nginx
+                ports:
+                - containerPort: 80
+
+> kubectl apply -f backend.yml
+> kubectl get pods -n secure-app
+
+**** Fronend POD *******
+frontend.yml
+
+    apiVersion: v1
+        kind: Pod
+        metadata:
+        name: frontend
+        namespace: secure-app
+        labels:
+            app: frontend
+        spec:
+        containers:
+        - name: frontend
+            image: busybox
+            command: ["sleep","3600"]
+
+> kubectl apply -f frontend.yml
+> kubectl get pods -n secure-app
+
+Let's Try to connect frontend to backend
+
+> kubectl exec -it frontend -n secure-app -- sh
+
+once you are inside the backend shell
+
+    ## wget --spider backend
+    (you can see some response) -- connecting to backend: clusterIp you can see
+
+*********** Setup a Network-policy *********
+
+network-policy.yml
+
+        apiVersion: networking.k8s.io/v1
+        kind: NetworkPolicy
+        metadata:
+        name: allow-frontend-to-backend
+        namespace: secure-app
+        spec:
+        podSelector:
+            matchLabels:
+            app: backend
+        policyTypes:
+        - Ingress
+        ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                role: frontend
+            ports:
+            - protocol: TCP
+            port: 80
+
+
+
+> kubectl apply -f network-policy.yml
+
+> kubectl exec -it frontend -n secure-app -- sh
+
+once you are inside the backend shell
+    ## wget --spider backend
+    (you can see some response) -- connecting to backend: clusterIp you can see
+    -- here also it must work
+
+**** Let's verify this policy is blocking or not *********
+
+create one unauthorized pods (unauthorized.yml)
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+    name: unauthorized
+    namespace: secure-app
+    labels:
+        app: unauthorized
+    spec:
+    containers:
+    - name: unauthorized
+        image: busybox
+        command: ["sleep","3600"]
+
+> kubectl apply -f unauthorized.yml
+
+> kubectl exec -it frontend -n secure-app -- sh
+
+once you are inside the backend shell
+    ## wget --spider backend
+
+    (this must fail due to network policy)
+
+(using network policy you can configure which pods can communicate each other
+what traffic you want to stop)

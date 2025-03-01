@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+  namespace: secure-app
+  labels:
+    app: frontend
+spec:
+  containers:
+  - name: frontend
+    image: busybox
+    command: ["sleep","3600"]

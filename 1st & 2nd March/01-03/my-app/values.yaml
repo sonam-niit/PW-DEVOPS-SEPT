@@ -1,0 +1,24 @@
+replicaCount: 2
+
+image:
+  repository: sonamsoni/nodeapp1
+  pullPolicy: IfNotPresent
+  tag: latest
+
+
+service:
+  type: ClusterIP
+  port: 5000
+
+ingress:
+  enabled: false
+
+resources: 
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 250m
+    memory: 128Mi
+
+

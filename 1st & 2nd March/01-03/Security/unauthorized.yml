@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unauthorized
+  namespace: secure-app
+  labels:
+    app: unauthorized
+spec:
+  containers:
+  - name: unauthorized
+    image: busybox
+    command: ["sleep","3600"]
