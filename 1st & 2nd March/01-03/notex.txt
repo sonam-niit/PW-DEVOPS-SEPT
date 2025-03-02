@@ -8,8 +8,11 @@ minikube start --cni calico
 ** Verify calico ************
 > kubectl get pods -n kube-system (get all pods running under kube-system namespace)
 
+(if minikube is not showing any pods for calico then minikube stop, minikube delete)
+then again start with cni flag
+
 Run in GitBash: > kubectl get pods -n kube-system | grep calico
-(it will fillter pods running with calico)
+(it will filter pods running with calico)
 
 To implement network policies
 --------------------------------------------
@@ -62,7 +65,14 @@ Let's Try to connect frontend to backend
 once you are inside the backend shell
 
     ## wget --spider backend
-    (you can see some response) -- connecting to backend: clusterIp you can see
+    (you can see some response) -- connecting to backend: Ip address you can see
+
+   if backend not found then search for IP associated with backend pod
+   > kubectl get pod backend -o wide -n secure-app
+
+  Again go to shell and try to ping
+  > ping ipaddress
+  > wget --spider ipaddress
 
 *********** Setup a Network-policy *********
 

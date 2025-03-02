@@ -1,0 +1,22 @@
+Simple APPlication where we want to connect Python with MYSQL
+and we want to do some Operations
+
+Install dependencies
+--- create dependencies.txt 
+    add all dependencies
+--- pip install -r dependencies.txt
+
+Cretae 
+
+     config.py
+     database.py 
+     models.py 
+     routes.py 
+     app.py
+     Dockerfile
+     docker-compose.yml (running 2 service)
+
+Once all files created:
+start docker desktop
+>> docker-compose up --build
+this will start 2 containers and then can connect
