@@ -1,0 +1,31 @@
+# LAUNCH EC2 INSTANCE USING ANNSIBLE
+# first install amazon.aws collection from ansible-galaxy
+
+---
+- name: Launch multiple ec2 instance in amazon
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: launch ec2 instance
+      amazon.aws.ec2_instance:
+        name: "my_ec2_instance"
+        key_name: ssh_key_pair
+        region: "ap-south-1"
+        security_groups: default
+        image_id: ami-0d682f26195e9ec0f # Amazon Linux
+        instance_type: t2.micro
+        wait: true
+        count: 2
+        tags:
+          name: "my_ec2_tag:latest"
+
+    # - name: Show ec2 instance details
+    #   debug:
+    #     msg: "EC2 instance ID: {{ ec2.instance.id }} with public ip: {{ ec2.instance.public_ip }}"
+
+
+
+# fatal: [localhost]: FAILED! => {"changed": false, "msg": "Failed to import the required Python library (botocore and boto3) 
+# on DESKTOP-1UL4DK7's Python /usr/bin/python3. Please read the module documentation and install it in the appropriate location. 
+# If the required library is installed, but Ansible is using the
