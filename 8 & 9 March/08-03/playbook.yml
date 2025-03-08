@@ -10,13 +10,15 @@
     - name: launch ec2 instance
       amazon.aws.ec2_instance:
         name: "my_ec2_instance"
-        key_name: ssh_key_pair
-        region: "ap-south-1"
+        key_name: "ssh_key_pair"
+        region: "ap-east-1"
         security_groups: default
-        image_id: ami-0d682f26195e9ec0f # Amazon Linux
+        image_id: "ami-08b5b3a93ed654d19" # Amazon Linux
         instance_type: t2.micro
         wait: true
-        count: 2
+        count: 1
+        network:
+          assign_public_id: true
         tags:
           name: "my_ec2_tag:latest"
 

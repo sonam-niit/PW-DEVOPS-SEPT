@@ -1,0 +1,30 @@
+
+************ Steps *****************
+
+1. create dependencies.txt (add all req dependencies)
+2. create config.py (DB Configuration)
+3. create database.py (written function for DB connection)
+4. models.py (Table creation)
+5. routes.py (APIs)
+6. app.py (final server code)
+7. docker-compose.yml (main containerization file)
+
+Run  >> docker-compose up -d --build
+RUN  >> docker ps (verify containers running) if Both containers up
+Open Browser: localhost:5000/test (will create table in DB inside container)
+            localhost:5000/users (check in browser which trigger get method)
+
+    you can open thunder client to check POST method:
+        localhost:5000/users 
+        body: { "name": "sonam soni" , "email": "sonam@gmail.com"}
+again check get req in browser:
+----------------------- To access Database --------------------
+>> docker exec -it mysql_container bash
+# mysql -u root -p (enter password)
+> show databases;
+> use flaskapp;
+> show tables;
+> select * from users;
+
+
+
