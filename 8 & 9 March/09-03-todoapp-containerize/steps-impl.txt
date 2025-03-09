@@ -1,0 +1,65 @@
+Create Project Folder and inside that create file name docker-compose.yml
+Create Backend Folder
+    create Package.json file by using following command
+        npm init -y
+    Install Dependencies
+        npm i express dotenv mongoose cors
+    Create folders and files
+        models--> Todo.js
+        routes--> todoRoutes.js
+        .env --> MONGO_URI=mongodb://mongo:27017/todoapp 
+        server.js --> add code
+        Docker file --> add code
+
+add code inside docker-compose.yml
+-- docker-compose up -d --build
+check running containers, to see the status of Backend
+-- docker logs backend (if server is started and connected with DB then test APIs)
+
+URL: http://localhost:5000/api/todo (GET,POST,PUT,DELETE)
+check from thunder client
+
+For direct connect with DB
+-- docker exec -it mongo_db bash
+  /# mongosh
+  -- show databases
+  -- use todoapp
+  -- show collections
+  -- db.todos.find() (here todos is the name of collection)
+
+*********** Frontend APP ********************
+create vite Project
+
+-- npm create vite@latest
+    give project name: frontend
+    select React
+    select javascript
+your project structure is ready
+    (to run them locally you can do npm install and npm run dev)
+
+Let's implement basic code for Consume API from backend
+to consume api use axios Dependencies
+-- npm i axios
+open src/main.jsx and just comment the default css included.
+inside the src folder create one more folder: components
+create TodoForm.jsx
+create TodoList.jsx
+edit App.jsx as shown
+include Dockerfile in frontend also add code
+
+update compose file
+then again check docker compose.
+
+you can see 3 containers running and  communicating between each other
+
+(in case in frontend localhost:3000 if you see console error blocked by corsp policy)
+
+in your backend server.js include 2 lines code as shown
+
+    const cors= require('cors');
+
+    const app = express(); //server
+    app.use(express.json()); //reading JSON
+    app.use(cors()); //connect frontend with backend
+
+(compare and update accordingly also start compose again and check output)

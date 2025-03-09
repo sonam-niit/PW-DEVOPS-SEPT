@@ -17,5 +17,12 @@ services:
     environment:
       MONGO_URL: "mongodb://mongo:27017/todoapp"
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
 volumes:
   mongo_data: 
