@@ -1,0 +1,13 @@
+# Git Ignore for Terraform
+
+**/.Terraform
+
+*.tfstate
+*.tfstate.*
+
+crash.log
+
+*.tfplan
+
+.terraformrc
+terraform.rc

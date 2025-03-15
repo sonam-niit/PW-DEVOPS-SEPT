@@ -1,0 +1,37 @@
+IAC- infractructures as Code
+
+It is a method of managing and provisioning IT infractructure 
+(servers, networks, storages and databases) manage using files rather 
+than manual processes.
+
+Devops team can manage the entire infra settings using IaC efficeintly.
+
+Key Principles
+---------------------------
+
+1. Declarative Approach: define the requirements with state and system 
+automatically adjust configurations to match.
+
+2. Imperative Approach: Specifing step by step instructiorns to get the
+desired requirements.
+
+3. Version Control
+4. Automation
+5. Sclabality
+
+Types of IAC
+---------------------------------
+1. Configuration Management:
+    -- manage software installation
+    -- Ansible, Chef, puppet
+2. Orchestration & Provisioning:
+    -- Resource Creation and manage multiple cloud providers
+    -- Terraform
+3. Container Orchestration:
+    manage containerized applications and deployments
+    -- kubernetes and Docker, docker compose
+
+******************** Use Case *******************
+
+1. Deploy Resources on AWS, Azure and Google cloud
+2. Maintain environments for development, testing and production
