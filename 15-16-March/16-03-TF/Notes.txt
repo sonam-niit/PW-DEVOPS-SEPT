@@ -1,0 +1,52 @@
+Folder Structure of Terraform
+
+main.tf 
+    strating point of Terraform configuration.
+    we can define recources and module calls
+variables.tf 
+    create variables declaration
+    each variable can have type, name, default value, description
+output.tf
+    contains output definations
+    (Public Ip, recource ID)
+terraform.tfvars
+    contains default values for local testing
+    add values for variables declared inside variable.tf file
+providers.tf    
+    configure cloud providers
+backend.tf
+    store state configurations 
+    if you want to use remote backends for that we can configure this file
+    for use of S3 bucket or Azure Blobs etc..
+
+modules/: (modules folder)
+        add reusable terraform modules and each submodules have 
+
+        sub module:
+            main.tf
+            variables.tf
+            outputs.tf
+
+Environment folder  
+    environment/:
+        add environment specific values
+            terraform.tfvar using some configuration
+        
+        dev/terraform.tfvars (variables for development)
+        staging/terraform.tfvars (variables for testing)
+        prod/terraform.tfvars (variables for Production setup)
+
+    ************ Let's Create one AWS instance and deploy nginx server ********
+
+        main.tf
+        variables.tf
+        outputs.td
+        terraform.tfvars
+    
+    Save all files and then
+
+        terraform init
+        terraform plan
+        terraform apply
+
+    Copy public IP coming in your console. check in browser and you can see the default page of NGINX
