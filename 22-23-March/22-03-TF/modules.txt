@@ -1,0 +1,8 @@
+Modules its called Terraform container and using that we can work with multiple resources
+
+In every TF project we must have atleast 1 module which is called root module
+which is having main.tf file.
+
+We can also add multiple modules to reuse.
+
+Create Simple EC2 instance using Module.

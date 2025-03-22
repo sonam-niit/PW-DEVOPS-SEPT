@@ -5,6 +5,10 @@ resource "aws_s3_bucket" "versioned_bucket" {
   bucket        = "my-versioned-bucket-123"
   force_destroy = true # allows terraform to delete non-empty buckets
 
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
   tags = {
     Name        = "VersionedBucket"
     Environment = "Dev"

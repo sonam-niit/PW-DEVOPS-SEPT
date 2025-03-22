@@ -50,3 +50,6 @@ Environment folder
         terraform apply
 
     Copy public IP coming in your console. check in browser and you can see the default page of NGINX
+
+
+************** S3 Bucket Creation with Versioning *******************
