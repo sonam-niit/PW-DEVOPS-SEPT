@@ -1,0 +1,19 @@
+Provisioners in terraform
+------------------------------
+Provisioners simply allows you to run commands or
+scripts.
+
+2 Types:
+     1 Locally: in local system local-exec
+     2. Remotely: run on servers like EC2 remote-exec
+
+Use Cases:
+
+    install software
+    configure system
+    run shell scripts
+    notify the CI/CD system
+
+1. Local-Provisioners
+
+    
