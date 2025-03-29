@@ -1,0 +1,66 @@
+What are the TF Workspaces?
+
+its a feature of TF which actually allows us to manage
+multiple environments (like dev, staging, prod) 
+by using same cconfiguration.
+
+While working with terraform it provided default workspace.
+we can create extra Workspaces as per our requirements.
+
+Why Optimization of Workspaces?
+----------------------------------
+when we are working with multiple environments or multiple projects 
+it provided benefits in 
+    isolating state: manage state specific for diffrent diffrent environments
+    simplify configuration: use common configuration for allows
+    reduces Human Error
+
+To work with workspace let's take one example
+----------------------------------------------
+created one folder named project1
+    terraform.tf 
+    main.tf
+    outputs.tf
+
+In your terminal execute 
+terraform init
+terraform workspace new dev
+terraform workspace new prod
+terraform workspace list
+
+change workspace: 
+    terraform workspace select dev
+    terraform apply -auto-approve
+    terraform workspace select prod
+    terraform apply -auto-approve
+
+Destroy command
+    terraform workspace select dev
+    terraform destroy -auto-approve
+    terraform workspace select prod
+    terraform destroy -auto-approve
+
+---------------------------------------------------
+work with multiple workspaces as well as env files
+
+project:
+    env 
+        dev.tfvars
+        staging.tfvars
+        prod.tfvars
+    main.tf
+    outputs.tf
+    variables.tf
+    terraform.tf
+
+-- terraform workspace new dev
+-- terraform workspace new staging
+-- terraform workspace new prod
+
+terraform workspace select dev
+terraform apply -var-file=env/dev.tfvars -var-file=regions/us-east-1.tfvars
+
+terraform destroy -var-file=env/dev.tfvars -var-file=regions/us-east-1.tfvars
+
+delete workspace
+    terraform workspace delete dev
