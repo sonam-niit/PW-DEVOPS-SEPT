@@ -1,0 +1,16 @@
+- name: install and start NGINX
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update Package list
+      apt:
+        update_cache: yes
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+    - name: start and enable NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: yes
