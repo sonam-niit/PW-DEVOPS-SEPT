@@ -1,0 +1,22 @@
+Creating Cluster
+
+open windows powershell as an administrator:
+
+then run below commands.
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+verify version: choco -v
+
+install ekstl: choco install -y eksctl
+
+let's create cluster
+
+eksctl create cluster --name sonam-cluster01 --region "us-east-1" --nodegroup-name "my-node-group" --node-type t3.medium --nodes 2
+
+Once the cluster created we can set up the other things.
+
+verify cluster details using kubectl commands
+
+you can check: kubectl get nodes
+ create pods and check services as well

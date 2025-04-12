@@ -1,0 +1,21 @@
+Green-blue Deployment
+
+running application in 2 environments
+blue (live one)
+green (idle one/ staging)
+
+Current Version running: 
+    Blue Deployment
+    handling Current Version
+    serving all traffic
+
+New Version Deployed (Green)
+    Green Environment where you have deployed new version of application
+    you test everything without toucing the blue environment
+
+Switch Traffic:
+    if you are confident noe this version is stable
+    switch traffic from blue to green
+
+RollBack:
+    incase is there any issue, go back to blue environment
