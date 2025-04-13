@@ -1,0 +1,43 @@
+Go to AWS Console
+
+Create 2 Instance (Ubuntu)
+
+-- follow simple process to create instances
+    you can use default VPN but take 2 diffrent subnet zone for both instances
+
+Use Security group with HTTO port
+
+After this create TargetGroups
+(which defined which servers the ALB will send the traffic)
+
+EC2 --> TargetGroups --> Create Target group
+type: instances
+protocol: HTTO, port : 80
+select default VPC
+
+give the name and continue
+--select instances and create
+
+-- Create ALB 
+
+    click on create loadbalancer --> application Load balancer --> givename (my-alb)
+    --> internet facing --> IPv4 --> Select Network mapping --> default vpc -->
+    select 2 zone where your instances are available --> Select security group based on rules -->
+    select http port: 80 and select TargetGroups which is created.
+
+    click cretae Load Balancers
+    copy the dns and check the response multiple time to see the diffrent from diffrent instance.
+
+
+To Setup NGINX instance:
+    connect to instance:
+        sudo apt update
+        sudo apt install NGINX
+        sudo systemctl enable nginx
+        sudo systemctl start nginx
+        sudo systemctl status nginx
+
+    edit the file index.html: cd /var/www/html
+                              nano index.html (edit and save)
+
+    Check NGINX serving from which folder: cat /etc/nginx/sites-available/default | grep root

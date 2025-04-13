@@ -19,3 +19,31 @@ Switch Traffic:
 
 RollBack:
     incase is there any issue, go back to blue environment
+
+Create v1.yml for blue-Deployment
+create v2.yml for green-Deployment
+
+then create service to handle traffic via blue
+later you can change to green to switch traffic.
+
+>kubectl apply -f v1.yml
+>kubectl apply -f v2.yml
+>kubectl apply -f myapp-service.yml
+
+check the pod and service status
+>kubectl get pods
+>kubectl get svc 
+
+kubectl exec -it <pod-name> -- curl localhost 
+(to check nginx is working inside pod)
+
+-- to access using docker-desktop cluster
+    localhost:NodePort
+-- to access using minikube
+    minikube service myapp-service
+
+make sure
+labels: app: myapp
+selector: app: myapp
+
+(must match to access service)

@@ -4,8 +4,10 @@ metadata:
   name: myapp-service
 spec:
   selector:
-    name: myapp
+    app: myapp
     version: blue ##initially routes using blue one
+    ## Just change from blue to green
+    ## you will be switching traffic from blue to green environment
   ports:
     - protocol: TCP
       port: 80
