@@ -56,11 +56,11 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [ aws_security_group.ec2_sg.id ]
   user_data = <<-EOF
   #!/bin/bash
-  echo "Hello from Server ${count.index+1}" > /var/www/html/index.html
-  yum install -u httpd
-  systemctl start httpd
-  systemctl enable httpd
-  mv /var/www/html/index.html /var/www/html/index.html
+  sudo yum install -y httpd
+  sudo systemctl start httpd
+  sudo systemctl enable httpd
+  echo "Hello from Server ${count.index+1}" > index.html
+  sudo mv index.html /var/www/html/index.html
   EOF
   tags = {
     Name = "web-server-${count.index+1}"

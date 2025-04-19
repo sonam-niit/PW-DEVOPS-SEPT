@@ -27,6 +27,17 @@ resource "aws_lb_target_group" "tg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
+
+  health_check {
+    enabled = true 
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 5
+    interval = 30
+    path = "/" # Check Health path / for root level
+    matcher = "200-299" ##status Codes
+
+  }
 }
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.arn
