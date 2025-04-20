@@ -21,6 +21,11 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = var.subnet_ids
+  access_logs {
+    bucket  = var.log_bucket
+    prefix  = "alb-logs"
+    enabled = true
+  }
 }
 resource "aws_lb_target_group" "tg" {
   name     = "alb-tg"

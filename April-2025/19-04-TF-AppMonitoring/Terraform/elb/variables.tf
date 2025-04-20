@@ -10,3 +10,6 @@ variable "instance_ids" {
 variable "target_group_ports" {
   type = list(number)
 }
+variable "log_bucket" {
+  type = string
+}

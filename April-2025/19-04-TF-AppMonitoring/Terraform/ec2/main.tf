@@ -1,5 +1,7 @@
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
+  enable_dns_support   = true # get DNS Name
+  enable_dns_hostnames = true
 }
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
@@ -53,14 +55,14 @@ resource "aws_instance" "web" {
   ami = "ami-0e449927258d45bc4"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.subnet[count.index].id
+  associate_public_ip_address = true #get public IP
   vpc_security_group_ids = [ aws_security_group.ec2_sg.id ]
   user_data = <<-EOF
   #!/bin/bash
   sudo yum install -y httpd
+  echo "Hello from Server ${count.index+1}" > /var/www/html/index.html
   sudo systemctl start httpd
   sudo systemctl enable httpd
-  echo "Hello from Server ${count.index+1}" > index.html
-  sudo mv index.html /var/www/html/index.html
   EOF
   tags = {
     Name = "web-server-${count.index+1}"
