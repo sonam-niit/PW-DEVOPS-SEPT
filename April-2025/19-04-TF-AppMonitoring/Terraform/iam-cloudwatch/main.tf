@@ -19,6 +19,7 @@ resource "aws_iam_user_policy_attachment" "attach" {
 }
 resource "aws_s3_bucket" "alb_logs" {
   bucket = var.bucket_name
+  force_destroy = true
 }
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket                  = aws_s3_bucket.alb_logs.id
