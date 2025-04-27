@@ -24,3 +24,13 @@ module "alb" {
     instance_ids = module.ec2.instance_ids
   
 }
+module "s3" {
+  source = "../../modules/s3"
+  bucket_name = "frontend-bucket-for-terraform"
+}
+module "cloudfront" {
+  source = "../../modules/cloudfront"
+  s3_bucket_domain_name = module.s3.bucket_domain_name
+  bucket_name = module.s3.bucket_name
+
+}

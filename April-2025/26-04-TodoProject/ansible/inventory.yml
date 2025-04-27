@@ -1,15 +1,15 @@
 "all":
+  "children":
+    "backend":
+      "hosts":
+        "backend1": {}
+        "backend2": {}
   "hosts":
     "backend1":
-      "ansible_hostname": "107.23.58.44"
+      "ansible_host": "13.218.196.212"
       "ansible_ssh_private_key_file": "todo-app.pem"
       "ansible_user": "ubuntu"
     "backend2":
-      "ansible_hostname": "18.215.156.224"
+      "ansible_host": "54.221.81.124"
       "ansible_ssh_private_key_file": "todo-app.pem"
       "ansible_user": "ubuntu"
-"children":
-  "backend":
-    "hosts":
-      "backend1": {}
-      "backend2": {}

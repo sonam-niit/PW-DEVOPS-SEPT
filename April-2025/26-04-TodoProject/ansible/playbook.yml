@@ -1,0 +1,15 @@
+# - name: Deploy Backend Application
+#   hosts: backend
+#   become: yes
+#   vars:
+#     mongodb_url: "mongodb+srv://sonamgravity:R1g6o43WdNDanvRM@cluster0.dnx7cse.mongodb.net/todos"
+#   roles:
+#     - backend
+
+- name: Build and deploy frontend app to s3
+  hosts: localhost
+  vars:
+    frontend_path: ../frontend
+    s3_bucket: frontend-bucket-for-terraform
+  roles:
+    - frontend

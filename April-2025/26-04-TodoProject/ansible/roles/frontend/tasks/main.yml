@@ -1,0 +1,24 @@
+- name: Install Node.js
+  apt:
+    name: nodejs
+    state: present
+    update_cache: yes
+- name: Install npm
+  apt:
+    name: npm
+    state: present
+- name: Install frontend dependencies
+  shell: |
+    npm install
+  args:
+    chdir: "{{ frontend_path }}"
+
+- name: Build frontend application
+  shell: npm run build
+  args:
+    chdir: "{{ frontend_path }}"
+
+- name: Sync frontend build to S3 bucket
+  shell: |
+    aws s3 sync {{ frontend_path }}/dist s3://{{ s3_bucket }} --delete
+  
