@@ -2,7 +2,7 @@
 #   hosts: backend
 #   become: yes
 #   vars:
-#     mongodb_url: "mongodb+srv://sonamgravity:R1g6o43WdNDanvRM@cluster0.dnx7cse.mongodb.net/todos"
+#     mongodb_url: "MongoDB connection string here"
 #   roles:
 #     - backend
 
