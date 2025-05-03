@@ -1,0 +1,119 @@
+Monitoring is very important to detect the problems
+    high CPU
+    memory usage
+    failed deployment
+
+using that you can make your system more reliable, better performane and
+continous improvements.
+
+Fast Response:
+    set alerts and logs
+    check performane related issues.
+Real time feedbacks:
+Automated Supports:
+
+Monitoring Tools:
+--------------------------
+
+Prometheus?
+    -- it is open source Monitoring and alerting toolkit.
+    -- it is very ideal to record real time mentics in time series db
+    built in query language called PromoQL
+
+Let's Set Up Prometheus:
+
+Download: https://prometheus.io/download/
+(download linux tar extract)
+
+open wsl --> go to downloads folder --> just run ./prometheus
+
+run you can see the default output on dashboard
+http://localhost:9090/query
+
+Now If you want to monitor your ec2 instance, then cretae one instance, with basic req. 
+open 80,22,9100 inbound rule 
+
+install node exported.
+https://prometheus.io/docs/guides/node-exporter/
+
+once installation start node exported and check the metrics
+<public-ip>:9100/metrics
+
+if running then edit local yml file of prometheus and then get the metrices from node-exporter
+
+# my global config
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: "local"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "ec2-node"
+    static_configs:
+      - targets: ["52.23.162.62:9100"]
+
+Restrat prometheus:  ./prometheus --config.file=prometheus.yml
+
+check it: http://localhost:9090/targets (here)
+
+Execute your queries here:
+
+http://localhost:9090/query
+
+up --> run
+node_cpu_seconds_total
+node_network_receive_bytes_total
+node_filesystem_size_bytes
+node_memory_MemAvailable_bytes
+
+execute them check the response and output in graph
+
+For doing Real time Monitoring
+----------------------------------------
+
+CPU Usage: rate(node_cpu_seconds_total{mode="user"}[1m])
+(showing per CPU user mode usage)
+
+Memory Usage:
+    check used memory
+    node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+
+Disk Usage:
+    node_filesystem_avail_bytes{mountpoint="/"}
+
+Load Average:
+    node_load1
+
+
+Setup an alerts
+create alert.rules.yml
+--------------------------------
+groups:
+- name: example
+  labels:
+    team: myteam
+  rules:
+  - alert: HighCPUUsage
+    expr: rate(node_cpu_seconds_total{mode="user"}[1m]) > 0.5
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Instance {{$labels.instance}} has high CPU Usage"
+
+
+update your prometheus.yml file
+--------------------------------------------
+global:
+  scrape_interval: 15s 
+
+scrape_configs:
+
+  - job_name: "ec2-node"
+    static_configs:
+      - targets: ["52.23.162.62:9100"]
+    rule_files:
+      - "alert.rules.yml"
+
+Restart it again and check.

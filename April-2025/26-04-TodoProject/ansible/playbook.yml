@@ -1,15 +1,18 @@
-# - name: Deploy Backend Application
-#   hosts: backend
-#   become: yes
-#   vars:
-#     mongodb_url: "MongoDB connection string here"
-#   roles:
-#     - backend
+- name: Deploy Backend Application
+  hosts: backend
+  become: yes
+  vars:
+    mongodb_url: "MongoDB connection string here"
+  roles:
+    - backend
 
 - name: Build and deploy frontend app to s3
   hosts: localhost
   vars:
     frontend_path: ../frontend
     s3_bucket: frontend-bucket-for-terraform
+    AWS_DEFAULT_REGION: us-east-1
+    AWS_ACCESS_KEY_ID: add-your-access-key
+    AWS_SECRET_ACCESS_KEY: add-your-secret-key
   roles:
     - frontend

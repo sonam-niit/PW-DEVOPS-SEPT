@@ -21,4 +21,9 @@
 - name: Sync frontend build to S3 bucket
   shell: |
     aws s3 sync {{ frontend_path }}/dist s3://{{ s3_bucket }} --delete
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ AWS_ACCESS_KEY_ID }}"
+    AWS_SECRET_ACCESS_KEY: "{{ AWS_SECRET_ACCESS_KEY }}"
+    AWS_DEFAULT_REGION: "{{ AWS_DEFAULT_REGION }}"
+
   
