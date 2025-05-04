@@ -1,0 +1,80 @@
+Serverless computing is a cloud computing execution where
+cloud proider automatically manages the infa by
+including server provisioning, scaling and maintanance.
+
+Developers write and deploy the code without
+worrying about servers.
+
+Here 
+    No Server management
+    Event driven execution
+    pay as you go
+    auto scaling
+
+Common Services who provide Serverless computing:
+
+        AWS Lambda
+        Azure Functions
+        Google Cloud Functions
+
+Use Cases:
+    APIs & MicroServices
+    Real time fil processing
+    event driven application
+
+====================================================================
+AWS Lambda:
+    It allows you to run code without provisioning or managing servers.
+    pay only for the compute time.
+    There is no charge where your code is not running.
+
+FaaS (function as a Service)
+    you can write them in python, NodeJs, Java, Go etc..
+
+Lambda Concepts:
+
+    1. Function: the core piece of code that runs in response to an event
+    2. Trigger: Event Sources like API Gatewat, S3, CLoudWatch
+    3. handler: entry point for Lambda code
+    4. Runtime: language environment
+    5. Role (IAM): Execution Role (define what aws service the function can
+                    access)
+
+Use Case: Run a function when a file is uploaded to S3
+
+Step 1: Setup IAM Role:
+    Goto IAM > roles > create roles
+    AWs Service --> Lambda as usecase
+    attach policy:
+        AmazonS3ReadOnlyAccess
+        CloudWatchLogsFullAccess
+
+    name: lambda-s3-role
+
+Step 2: Create Bucket:
+    aws s3 mb s3://my-mabda-trigger-bucket
+
+Step 3: Create lambda Function
+
+    aws --> lambda --> create function
+    -->author from scratch --> name: s3FileLogger
+    Runtime-- node or python --> role (select above created role)
+    click on create function
+
+    add the code in python: 
+        import json
+
+        def lambda_handler(event, context):
+            for record in event['Records']:
+                s3_bucket = record['s3']['bucket']['name']
+                s3_key = record['s3']['object']['key']
+                print(f"New File uploaded: {s3_key} in bucker: {s3_bucket}")
+            return {
+                'statusCode': 200,
+                'body': json.dumps('Hello from Lambda!')
+            }
+Step 4: Create Trigger
+        Select S3 > select bucket
+
+Step 5: Check Logs in Cloud Watch --> logs
+

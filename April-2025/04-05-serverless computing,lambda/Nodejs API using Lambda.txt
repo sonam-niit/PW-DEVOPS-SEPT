@@ -1,0 +1,29 @@
+Create one express project
+    my-api-project
+        npm init -y
+        npm i express
+        npm i '@vendia/serverless-express'
+
+    create app.js for handling apis
+    cretae lambda.js fro handler on serverless
+
+create zip file of your project
+    zip -r express-app.zip . -x "node_modules/*"
+
+Goto AWS Lambda:
+    create function:
+    upload .zip file
+    upload here
+
+    in Runtime Settings: handler: lambda.handler
+
+Create API Gateway:
+    Selete HTTP API
+    in integration: select lambda --> express app
+
+    set route with path /
+
+    once created you can see the endpoint check the same
+
+Go to API gateway select lambda--> create Routes
+    https://<api-id>.execute-api.<region>.amazonaws.com/hello
