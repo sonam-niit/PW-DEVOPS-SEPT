@@ -1,4 +1,3 @@
-import serverlessExpress from '@vendia/serverless-express'
-import app from './app'
-
+const serverlessExpress = require('@vendia/serverless-express')
+const app = require('./index')
 exports.handler = serverlessExpress({app})

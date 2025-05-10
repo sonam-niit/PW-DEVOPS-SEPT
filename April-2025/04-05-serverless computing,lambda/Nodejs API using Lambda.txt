@@ -1,14 +1,13 @@
 Create one express project
     my-api-project
         npm init -y
-        npm i express
-        npm i '@vendia/serverless-express'
+        npm i express @vendia/serverless-express
 
-    create app.js for handling apis
-    cretae lambda.js fro handler on serverless
+    create index.js for handling apis
+    cretae lambda.js for handler on serverless
 
 create zip file of your project
-    zip -r express-app.zip . -x "node_modules/*"
+    zip -r express-app.zip . 
 
 Goto AWS Lambda:
     create function:
