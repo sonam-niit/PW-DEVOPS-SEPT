@@ -1,0 +1,27 @@
+ASG - Auto Scaling group in AWS used to automatically
+launch and terminate EC2 instance.
+
+Step 1: launch Template
+
+    EC2 Dashboard --> Launch Template
+    Create launch Template
+
+Step 2:
+    name, description
+    AMI, instance-type, security-grous(22,80)
+    advanced give userdata:
+#! /bin/bash
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+echo "<h1>Deployed via Auto Scaling Group</h1>" > /var/www/html/index.html
+
+Step3:EC2 Dash -> auto scaling group
+    select Template
+    select capacity: desired:2
+                        min:1
+                        max:3
+
+    launch Auto Scalling group and you can see 2
+    instances running on EC2 dashboard
