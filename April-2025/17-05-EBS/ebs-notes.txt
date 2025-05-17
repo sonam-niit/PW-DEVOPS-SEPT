@@ -1,0 +1,92 @@
+EBS: Elastic Block Store
+
+its a block-level storage volumes which we can use with EC2 instance.
+
+Its a Persistent storage: we can retain data even after deleting instance.
+
+gp3 (general purpose SSD) :: Latest General SSD, cost-effective
+    use case: Boot volumes, workloads dev/test
+
+gp2 (general purpose SSD) :: Older SSD :: 
+    use case: Boot volumes, low-latency apps
+
+iO1/iO2 (Provisioned IOPS SSD) :: High Performance SSD
+    use cases: databases
+
+Thoughtput optimized HDD (st1) :: high throughput, low cost
+    use cases: Big data, data warehouses
+
+sc1 (Cold HDD) :: lowest cost, infrequent access
+    use cases: Archive, backups
+
+Create Instance with simple flow
+once the instance is launched check the zone
+
+How to create EBS and how to use it to a perticular instance.
+--> EBS --> Create Volumes -->
+Give size 10GB --> tags add Name and value and save
+
+If you want to attach volume to instance then instance zone and volume zone must 
+be same. You can't the zone of a vloume once it is created.
+
+for attachment: go to the list of volumens, select ext volumes --: actions --> attach volumes
+select instance --> give the name  you can see the success of volumne attached
+
+to verify check instance --> storage and see the attached volume.
+
+Open wsl and try to connect with instance using ssh
+
+then run below command: lsblk (check the disk space):
+    xvda is default
+    xvdf is externally attached volume
+
+I wnat to check is my volume is having some data?
+> sudo file -s /dev/xvdf
+/dev/xvdf: data (indicates its empty)
+
+Format it using ext4 file system
+> sudo mkfs -t ext4 /dev/xvdf
+
+let's mount a directory to your volume
+create folder: sudo mkdir /data
+mount: sudo mount /dev/xvdf /data/
+check for munting done or not: lsblk 
+
+verify: df -h (mounting verify)
+
+=====================================================================
+
+cd /data
+sudo echo "Hello From EBS" >  hello.txt (option 1)
+echo "Hello From EBS" | sudo tee hello.txt  (option 2)
+cat hello.txt
+
+let's terminate instance and then 
+verify by creating another instance 
+attach the volume connect to instance using ssh
+to access: mkdir /data
+sudo mount /dev/xvdf /data/
+cd /data (access your Persistent content)
+--------------------------------------------------------------
+
+When you create this /data mounting point its temporary (means if you reboot/ restart/ 
+stop and start you instance then again you have to mount)
+
+if your instance reboot then that mount point will removed means 
+if you want to access again create /data directory then mount and then access
+
+Now how to make it Persistent??
+sudo blkid
+(take the id for /dev/xvdf)
+
+sudo nano /etc/fstab
+
+UUID=de4899b8-e4b0-4c28-9fd4-9bcc96b854ef /data ext4 defaults,nofail 0 2
+(add this at the end of the file)
+
+save now you can try to reboot and then again connect and check
+then also you can see the /data is mounted 
+
+you can check by using lsblk or df -h command
+
+if you terminate your instance means that point of mount also will get removed.
